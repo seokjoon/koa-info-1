@@ -23,15 +23,19 @@ app.listen((port), () => {
   console.log(`Server listening on port ${port}`)
 })
 
+
 mongoose.connect(MONGO_URI, {
-  // useFindAndModify: false,
+  //useFindAndModify: false,
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}).then(() => {
-  console.log('Connected to MongoDB')
-}).catch(e => {
-  console.log(e)
+}, (err) => {
+  if (err) {
+    console.log('Error connecting to MongoDB: ', err)
+  } else {
+    console.log('Connected to MongoDB')
+  }
 })
+
 
 //////// middleware BEGIN
 // app.use((ctx, next) => { next() })

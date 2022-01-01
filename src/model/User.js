@@ -23,6 +23,11 @@ export const UserSchema = new Schema({
     required: true,
     type: String,
   },
+  username: {
+    required: true,
+    type: String,
+    unique: true,
+  },
   updatedAt: {
     default: Date.now,
     type: Date,
@@ -63,8 +68,7 @@ UserSchema.methods.setToken = function () {
   return jwt.sign(
     {
       _id: this._id,
-      email: this.email,
-      name: this.name,
+      username: this.username,
     },
     process.env.JWT_SECRET,
     {
@@ -78,11 +82,15 @@ UserSchema.methods.setToken = function () {
  * @memberOf User
  * @returns {Promise<User>}
  */
-UserSchema.statics.findByEmail = function findByEmail (email) {
-  return this.findOne({ email })
+UserSchema.statics.findByUsername = function findByUsername (username) {
+  return this.findOne({ username })
 }
 
 
+/**
+ * @class User
+ * https://intellij-support.jetbrains.com/hc/en-us/community/posts/207115889-Mongoose-static-methods-autocompletion-in-WebStorm
+ */
 const User = mongoose.model('User', UserSchema)
 
 

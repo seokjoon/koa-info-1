@@ -18,7 +18,7 @@ userController.create = async ctx => {
     if(isExist) return ctx.status = 409 //conflict
     const user = new User({ username, })
     await user.setPassword(password)
-    await user.save() //FIXME
+    await user.save()
     ctx.body = user.serialize()
     userController.setToken(ctx, user)
   } catch (e) { ctx.throw(500, e) }

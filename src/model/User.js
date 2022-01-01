@@ -89,6 +89,7 @@ UserSchema.statics.findByUsername = function findByUsername (username) {
 
 /**
  * @class User
+ * @type {Model<UserSchema>}
  * https://intellij-support.jetbrains.com/hc/en-us/community/posts/207115889-Mongoose-static-methods-autocompletion-in-WebStorm
  */
 const User = mongoose.model('User', UserSchema)

@@ -23,7 +23,11 @@ export const InfoSchema = new Schema({
   users: [UserSchema],
 })
 
-
+/**
+ * @class Info
+ * @type {Model<InfoSchema>}
+ * https://intellij-support.jetbrains.com/hc/en-us/community/posts/207115889-Mongoose-static-methods-autocompletion-in-WebStorm
+ */
 const Info = mongoose.model('Info', InfoSchema)
 
 

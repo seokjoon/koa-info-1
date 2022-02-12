@@ -1,6 +1,7 @@
 import Info from '../model/Info.js'
 import inRes from '../helper/inRes.js'
-import inReq from '../helper/inReq.js'
+import inConst from '../helper/inConst.js'
+import infoSeed from '../seed/infoSeed.js'
 
 
 const infoController = {}
@@ -30,7 +31,7 @@ infoController.destroy = async ctx => {
 }
 
 
-infoController.getReqDump = ctx => inReq.dump(ctx)
+infoController.dump = ctx => inRes.dump(ctx)
 
 
 infoController.read = async ctx => {
@@ -39,13 +40,50 @@ infoController.read = async ctx => {
 
 
 infoController.reads = async ctx => {
-  const query = {}
+  let { limit, page, tag, title, username, } = ctx.query
+  const query = {
+    ...(tag ? { tags: tag } : {}),
+    ...(title ? { 'title': title } : {}),
+    ...(username ? { 'user.username': username } : {}),
+  }
+  page = parseInt(page || 1)
+  limit = parseInt(limit || inConst.ITEMS.PAGINATION.LIMIT)
   const items = await Info
     .find(query)
+    .limit(limit)
+    .skip((page - 1) * limit)
     .sort({ _id: -1 }) //sort: desc -1, asc 1
     .exec()
+  const count = await Info.countDocuments(query).exec()
+  ctx.set('Last-Page', Math.ceil(count / limit))
   ctx.body = items
-    .map(item => item)
+    .map(item => item.toJSON())
+    .map(item => ({
+      ...item,
+      content: inRes.htmlSanitizeSlice(item.content)
+    }))
+}
+
+
+infoController.seed = ctx => {
+  try {
+    infoSeed()
+    ctx.body = 'seed'
+  } catch (e) { ctx.throw(500, e) }
+}
+
+
+infoController.update = async ctx => {
+  const { id  } = ctx.params
+  try {
+    const dataNext = { ...ctx.request.body }
+    if(dataNext.content) dataNext.content = inRes.htmlSanitizeSlice(dataNext.content)
+    const item = await Info.findByIdAndUpdate(id, dataNext, {
+      new: true //true is next val, false(default) is prev val
+    }).exec()
+    if(!(item)) return ctx.status = 404
+    ctx.body = item
+  } catch (e) { ctx.throw(500, e) }
 }
 
 

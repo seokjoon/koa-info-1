@@ -22,7 +22,7 @@ infoController.create = async ctx => {
 }
 
 
-infoController.destroy = async ctx => {
+infoController.delete = async ctx => {
   const { id } = ctx.params
   try {
     await Info.findByIdAndRemove(id).exec()

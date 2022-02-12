@@ -39,7 +39,7 @@ userController.createToken = async ctx => {
 }
 
 
-userController.destroyToken = async ctx => {
+userController.deleteToken = async ctx => {
   ctx.cookies.set('access_token')
   ctx.statics = 204 //no content
 }

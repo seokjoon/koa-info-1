@@ -23,7 +23,7 @@ infoRoute.get(
   infoMiddleware.getItemById,
   infoController.read,
 )
-infoRoute.get('/info/seed', infoController.seed)
+infoRoute.get('/infoSeed', infoController.seed)
 
 
 infoRoute.post(

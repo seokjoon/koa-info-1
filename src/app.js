@@ -3,7 +3,7 @@ import path from 'path'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import bodyParser from 'koa-bodyparser'
-// import jwtMiddleware from './middleware/jwtMiddleware.js'
+import jwtMiddleware from './middleware/jwtMiddleware.js'
 import cors from '@koa/cors'
 
 
@@ -37,7 +37,7 @@ mongoose.connect(MONGO_URI, {
 // app.use((ctx, next) => { next() })
 // app.use(async (ctx, next) => { await next().then(() => { console.log('bar') }) })
 app.use(bodyParser())
-// app.use(jwtMiddleware)
+app.use(jwtMiddleware)
 //라우터 적용 전
 //////// middleware END
 

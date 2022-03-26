@@ -9,11 +9,7 @@ infoCatController.reads = async ctx => {
   const query = {
     ...(title ? { 'title': title } : {}),
   }
-  const items = await InfoCat.find(query).sort({ '_id': -1 }).exec()
-  ctx.body = {
-    code: 200,
-    data: items,
-  }
+  ctx.body = await InfoCat.find(query).sort({ '_id': -1 }).exec()
 }
 
 

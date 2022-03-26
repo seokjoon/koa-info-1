@@ -68,7 +68,7 @@ infoController.reads = async ctx => {
 infoController.seed = ctx => {
   try {
     infoSeed()
-    ctx.body = 'seed'
+    ctx.body = 'seed info'
   } catch (e) { ctx.throw(500, e) }
 }
 

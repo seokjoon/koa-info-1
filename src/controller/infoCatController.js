@@ -1,5 +1,5 @@
 import InfoCat from '../model/InfoCat.js'
-import infoCatSeed from '../seed/infoCatSeed'
+import infoCatSeed from '../seed/infoCatSeed.js'
 
 const infoCatController = {}
 
@@ -25,3 +25,6 @@ infoCatController.seed = ctx => {
     ctx.throw()
   }
 }
+
+
+export default infoCatController
